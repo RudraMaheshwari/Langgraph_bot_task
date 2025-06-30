@@ -11,7 +11,6 @@ def get_llm():
         model_id="anthropic.claude-3-5-sonnet-20240620-v1:0",
         model_kwargs={
             "temperature": 0.3,
-            "top_p": 0.9
         }
     )
 
@@ -21,6 +20,7 @@ def get_llm():
 #         model="models/text-embedding-004",
 #         google_api_key=os.getenv("GOOGLE_API_KEY")
 #     )
+
 
 def get_embeddings():
     return BedrockEmbeddings(

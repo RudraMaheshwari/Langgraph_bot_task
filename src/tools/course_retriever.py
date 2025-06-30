@@ -50,7 +50,7 @@ class CourseRetriever:
         print("[INFO] FAISS index created and saved")
         return vectorstore
 
-    def search_courses(self, query: str, k: int = 4) -> List[Document]:
+    def search_courses(self, query: str, k: int = 3) -> List[Document]:
         """Search for relevant courses for recommendation."""
         results = self.vectorstore.similarity_search(query, k=k)
 

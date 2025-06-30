@@ -153,33 +153,6 @@ def get_user_info():
         "has_offered_recommendation": state.get("has_offered_recommendation", False)
     })
 
-@app.route("/save_chat_log", methods=["POST"])
-def save_chat_log():
-    user_id = get_user_id()
-    state = get_user_session(user_id)
-
-    messages = state.get("messages", [])
-    if not messages:
-        return jsonify({"error": "No chat history to save"}), 400
-
-    chat_log = []
-    for msg in messages:
-        role = "user" if msg.type == "human" else "bot"
-        chat_log.append({"role": role, "content": msg.content})
-
-    timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-    filename = f"chat_log_{user_id}_{timestamp}.json"
-    save_path = os.path.join("chat_logs", filename)
-
-    os.makedirs("chat_logs", exist_ok=True)
-
-    try:
-        with open(save_path, "w", encoding="utf-8") as f:
-            json.dump(chat_log, f, ensure_ascii=False, indent=2)
-        return jsonify({"message": f"Chat log saved successfully as {filename}"})
-    except Exception as e:
-        print(f"Error saving chat log: {e}")
-        return jsonify({"error": "Failed to save chat log"}), 500
 
 if __name__ == "__main__":
     app.run(debug=True)
